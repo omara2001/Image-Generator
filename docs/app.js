@@ -20,7 +20,7 @@ async function generateImage() {
         generateButton.disabled = true;
 
         // Call our backend server
-        const response = await fetch('https://image-generator-production-656b.up.railway.app/generate-image', {
+        const response = await fetch('https://image-generator-production-656b.up.railway.app/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
