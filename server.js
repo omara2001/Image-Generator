@@ -2,11 +2,21 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const path = require('path');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve static frontend files (assuming they are in a "public" folder)
+app.use(express.static(path.join(__dirname, "public")));
+
+// Root route to prevent "Cannot GET /" errors
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// API route to generate an image
 app.post('/generate-image', async (req, res) => {
     try {
         const response = await axios.post(
@@ -28,5 +38,6 @@ app.post('/generate-image', async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 3001; // Change to 3001 or any other number
+// Start the server
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
